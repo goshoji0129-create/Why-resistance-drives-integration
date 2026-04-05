@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How → Why：データ記述科学×学際的統合</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Helvetica Neue',Arial,'Noto Sans JP',sans-serif;background:#0a0a0f;color:#e8e6e3;min-height:100vh}
+.header{padding:32px 28px 20px;border-bottom:1px solid #1a1a2e}
+.tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#e63946;margin-bottom:8px}
+h1{font-size:24px;font-weight:300;color:#f1faee;line-height:1.4}
+h1 span{color:#e63946;font-weight:600}
+.desc{font-size:12px;color:#8d99ae;margin-top:10px;max-width:750px;line-height:1.7}
+.tabs{display:flex;border-bottom:1px solid #1a1a2e;overflow-x:auto}
+.tab{flex:1 1 0;padding:14px 16px;background:transparent;border:none;border-bottom:2px solid transparent;color:#8d99ae;cursor:pointer;font-size:11px;text-align:left;transition:all .2s;min-width:160px}
+.tab.active{background:#1a1a2e;border-bottom-color:#e63946;color:#f1faee}
+.tab b{display:block;margin-bottom:3px;font-size:12px}
+.content{padding:28px}
+.scene{display:none}
+.scene.active{display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.card{background:#12121a;border-radius:12px;padding:20px}
+.card h3{font-size:13px;font-weight:600;color:#f1faee;margin-bottom:4px}
+.card p{font-size:11px;color:#8d99ae;margin-bottom:14px}
+.why-box{border-radius:12px;padding:20px;margin-top:24px}
+.why-box.red{background:#1a0a0e;border:1px solid #3a1520}
+.why-box.green{background:#0a1a15;border:1px solid #153a30}
+.why-box.blue{background:#0a0f1a;border:1px solid #152a3a}
+.why-tag{font-size:11px;letter-spacing:2px;margin-bottom:8px}
+.why-text{font-size:13px;line-height:1.8}
+.why-text strong{color:#f1faee}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px}
+@media(max-width:800px){.three-col{grid-template-columns:1fr}}
+.axis-card{background:#12121a;border-radius:8px;padding:18px;border-left:3px solid}
+.axis-tag{font-size:11px;letter-spacing:2px;margin-bottom:8px}
+.axis-why{font-size:13px;font-weight:600;color:#f1faee;margin-bottom:6px}
+.axis-mech{font-size:12px;color:#8d99ae;margin-bottom:6px}
+.axis-analogy{font-size:11px;color:#666;font-style:italic}
+.step-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px}
+@media(max-width:800px){.step-grid{grid-template-columns:1fr}}
+.step{background:#0a0a0f;border-radius:6px;padding:14px}
+.step-num{font-size:20px;font-weight:700;margin-bottom:4px}
+.step-title{font-size:12px;font-weight:600;color:#f1faee;margin-bottom:4px}
+.step-desc{font-size:11px;color:#8d99ae;line-height:1.6}
+canvas{width:100%!important;max-height:280px}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="tag">Hypothetical Analysis with Dummy Data</div>
+<h1>How → Why：データ記述科学は学際的統合の<span>「なぜ」</span>に到達できるか</h1>
+<p class="desc">博論第5章の翻訳の3類型をダミーデータで再現し、GToP三軸（GDA・TDA・PDA）が「how」を超えて「why」に到達するシナリオを検証する。</p>
+</div>
+
+<div class="tabs">
+<button class="tab active" onclick="show(0)"><b>シナリオ1: 最適輸送理論</b>なぜ抵抗が統合を駆動するか</button>
+<button class="tab" onclick="show(1)"><b>シナリオ2: 情報幾何学</b>なぜ揺らぎが前提条件か</button>
+<button class="tab" onclick="show(2)"><b>シナリオ3: TDA</b>なぜ新しい接続が創発するか</button>
+<button class="tab" onclick="show(3)"><b>理論的統合</b>知の相転移仮説</button>
+</div>
+
+<div class="content">
+<!-- Scene 0 -->
+<div class="scene active" id="s0">
+<div class="grid">
+<div class="card"><h3>累積移動距離（Wasserstein距離）</h3><p>初期セッションからの談話パターン分布の累積変化量</p><canvas id="c0a"></canvas></div>
+<div class="card"><h3>「データの抵抗」コード出現率（%）</h3><p>仮説とデータの齟齬に言及する発話の割合</p><canvas id="c0b"></canvas></div>
+</div>
+<div class="why-box red"><div class="why-tag" style="color:#e63946">WHY：なぜ抵抗が統合を駆動するのか</div><p class="why-text" style="color:#d4c5c9">学際的再構成型（赤系）だけが分布空間を大きく移動し、その加速は「抵抗」ピーク直後に生じる。<strong style="color:#e63946">抵抗は談話分布に対する「外力」として機能し、分布を初期状態から不可逆的に押し出す。</strong>同一学問型は抵抗を回避するため分布が動かず、分野連携型は途中で停止する。Kapurのproductive failureを「確率分布への外力」として再記述した情報幾何学的解答。</p></div>
+</div>
+
+<!-- Scene 1 -->
+<div class="scene" id="s1">
+<div class="grid">
+<div class="card"><h3>最大エントロピー × 最終統合度</h3><p>「揺らぎ」のピーク強度と最終セッションの統合的解釈コード割合</p><canvas id="c1a"></canvas></div>
+<div class="card"><h3>抵抗ピーク × 最終統合度</h3><p>各グループの最大「抵抗」率と最終統合到達度</p><canvas id="c1b"></canvas></div>
+</div>
+<div class="why-box green"><div class="why-tag" style="color:#2a9d8f">WHY：なぜ揺らぎが統合の前提条件なのか</div><p class="why-text" style="color:#c5d4d0"><strong style="color:#2a9d8f">エントロピーのピークが高いグループほど最終的な統合度が高い。</strong>統合に至るには知識構造が一時的に「溶ける」（エントロピー増大）段階が必要であり、この溶解なしに新しい構造は結晶化しない。熱力学の相転移と同型——秩序の一時的崩壊が、より高次の秩序への遷移の必要条件。</p></div>
+</div>
+
+<!-- Scene 2 -->
+<div class="scene" id="s2">
+<div class="grid">
+<div class="card"><h3>アクティブなコードカテゴリ数</h3><p>閾値（8%）以上の出現率を持つ談話コードカテゴリの数</p><canvas id="c2a"></canvas></div>
+<div class="card"><h3>「ループ」数の推移（TDA的特徴量）</h3><p>3つ以上のカテゴリが同時にアクティブ＝新しい接続の創発</p><canvas id="c2b"></canvas></div>
+</div>
+<div class="why-box blue"><div class="why-tag" style="color:#457b9d">WHY：なぜ新しい接続が創発するのか</div><p class="why-text" style="color:#c5cdd4"><strong style="color:#457b9d">学際的統合とは、談話ネットワークに新しい1次元ホモロジー（ループ）が生成されること。</strong>教科Aと教科Bの推論が、データ参照・他分野概念・統合的解釈を介して閉じた回路を形成する。抵抗は既存のループを壊す力として機能し、壊れた後により多くの頂点を含む新しいループが形成される。</p></div>
+</div>
+
+<!-- Scene 3 -->
+<div class="scene" id="s3">
+<div class="three-col">
+<div class="axis-card" style="border-left-color:#e63946"><div class="axis-tag" style="color:#e63946">PDA（最適輸送理論）</div><div class="axis-why">WHY: 抵抗は談話分布を押し出す外力</div><div class="axis-mech">メカニズム: Wasserstein距離の不可逆的増大</div><div class="axis-analogy">Kapurのproductive failure = 確率分布への外力</div></div>
+<div class="axis-card" style="border-left-color:#2a9d8f"><div class="axis-tag" style="color:#2a9d8f">GDA（情報幾何学）</div><div class="axis-why">WHY: 揺らぎはエントロピーの一時的増大</div><div class="axis-mech">メカニズム: Fisher計量上の軌跡の屈曲点</div><div class="axis-analogy">相転移 = 秩序の一時的崩壊と再結晶化</div></div>
+<div class="axis-card" style="border-left-color:#457b9d"><div class="axis-tag" style="color:#457b9d">TDA（位相的データ解析）</div><div class="axis-why">WHY: 統合は新しいループの獲得</div><div class="axis-mech">メカニズム: β1ホモロジーの生成</div><div class="axis-analogy">知識ネットワークのトポロジカル相転移</div></div>
+</div>
+<div class="why-box red">
+<h3 style="font-size:15px;color:#e63946;margin-bottom:14px">統合原理：学際的統合は知識構造の相転移である</h3>
+<p class="why-text" style="color:#d4c5c9">物理学の相転移（氷→水→蒸気）と同型の3段階が学際的統合に対応する。</p>
+<div class="step-grid">
+<div class="step"><div class="step-num" style="color:#e63946">①</div><div class="step-title">データの抵抗 = 外力の投入</div><div class="step-desc">PDA的記述：Wasserstein距離の増大。仮説とデータの齟齬が確率分布を平衡状態から押し出す。</div></div>
+<div class="step"><div class="step-num" style="color:#2a9d8f">②</div><div class="step-title">揺らぎ = 秩序の一時的崩壊</div><div class="step-desc">GDA的記述：エントロピーの極大。既存の知識構造が「溶ける」段階。博論第4章の「冗長化」に対応。</div></div>
+<div class="step"><div class="step-num" style="color:#457b9d">③</div><div class="step-title">新しいループ = 再結晶化</div><div class="step-desc">TDA的記述：β1ホモロジーの生成。異なる教科の推論が統合的解釈を介して閉じた回路を形成。</div></div>
+</div>
+</div>
+<div class="why-box blue" style="margin-top:20px">
+<h3 style="font-size:14px;color:#457b9d;margin-bottom:10px">基盤Sへの接続</h3>
+<p class="why-text" style="color:#c5cdd4">Kapurの「なぜ失敗が学習を促すか」への回答：<strong>「失敗（抵抗）は知識構造の相転移を駆動する外力であり、エントロピーの一時的増大を経て、より高次のトポロジカル構造への不可逆的遷移を引き起こすから」</strong>。教室での学際的統合と科学者のパラダイム転換は同じ相転移メカニズムの異なるスケールでの現れ。</p>
+</div>
+</div>
+</div>
+
+<script>
+// Tab switching
+function show(n){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===n));
+  document.querySelectorAll('.scene').forEach((s,i)=>s.classList.toggle('active',i===n));
+}
+
+// Data generation
+const GROUPS=[
+  {l:'G1:再構成型',t:'r',c:'#e63946'},{l:'G2:再構成型',t:'r',c:'#d62828'},
+  {l:'G3:連携型',t:'b',c:'#457b9d'},{l:'G4:連携型',t:'b',c:'#1d3557'},
+  {l:'G5:同一学問型',t:'m',c:'#a8dadc'},{l:'G6:同一学問型',t:'m',c:'#94d2bd'}
+];
+
+function gd(t,s,n){
+  const r=s/n;let d;
+  if(t==='r')d=[.35-.15*r,.25-.1*r,.15+.05*r,.05+.25*Math.sin(Math.PI*r),.02+.15*r,.01+.18*r*r,.02+.2*r*r];
+  else if(t==='b')d=[.3-.05*r,.25-.05*r,.15+.03*r,.05+.15*Math.sin(Math.PI*r),.05+.1*r,.01+.02*r,.03+.05*r];
+  else d=[.4+.05*r,.1-.03*r,.2,.03+.02*Math.sin(Math.PI*r),.01,.005,.01];
+  d=d.map(v=>Math.max(0,v+Math.random()*.03));
+  const sm=d.reduce((a,b)=>a+b,0);return d.map(v=>v/sm);
+}
+function wd(p,q){let cp=0,cq=0,d=0;for(let i=0;i<p.length;i++){cp+=p[i];cq+=q[i];d+=Math.abs(cp-cq)}return d}
+function ent(p){let h=0;for(const pi of p)if(pi>0)h-=pi*Math.log2(pi);return h}
+
+const sessions=10,labels=Array.from({length:sessions},(_,i)=>i+1);
+const ALL={};GROUPS.forEach(g=>{const s=[];for(let i=1;i<=sessions;i++)s.push(gd(g.t,i,sessions));ALL[g.l]=s});
+
+// Chart defaults
+Chart.defaults.color='#8d99ae';Chart.defaults.borderColor='#1a1a2e';Chart.defaults.font.size=10;
+
+// Scene 0: Wasserstein + Resistance
+const ds0a=[],ds0b=[];
+GROUPS.forEach(g=>{
+  const ss=ALL[g.l],init=ss[0];
+  ds0a.push({label:g.l,data:ss.map(s=>Math.round(wd(init,s)*1000)/1000),borderColor:g.c,backgroundColor:g.c+'22',fill:false,tension:.3,pointRadius:2,borderWidth:2});
+  ds0b.push({label:g.l,data:ss.map(s=>Math.round(s[3]*100)),borderColor:g.c,backgroundColor:g.c+'18',fill:true,tension:.3,pointRadius:2,borderWidth:2});
+});
+new Chart('c0a',{type:'line',data:{labels,datasets:ds0a},options:{plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'セッション'}},y:{title:{display:true,text:'累積WD'}}}}});
+new Chart('c0b',{type:'line',data:{labels,datasets:ds0b},options:{plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'セッション'}},y:{title:{display:true,text:'抵抗(%)'}}} }});
+
+// Scene 1: Entropy scatter + bar
+const sc1a=[],sc1b_labels=[],sc1b_res=[],sc1b_int=[],sc1b_colors=[];
+GROUPS.forEach(g=>{
+  const ss=ALL[g.l];let mx=0,mr=0;ss.forEach(s=>{const e=ent(s);if(e>mx)mx=e;if(s[3]>mr)mr=s[3]});
+  const fi=Math.round(ss[9][6]*100);
+  sc1a.push({x:Math.round(mx*100)/100,y:fi,c:g.c,l:g.l});
+  sc1b_labels.push(g.l);sc1b_res.push(Math.round(mr*100));sc1b_int.push(fi);sc1b_colors.push(g.c);
+});
+new Chart('c1a',{type:'scatter',data:{datasets:[{data:sc1a.map(d=>({x:d.x,y:d.y})),backgroundColor:sc1a.map(d=>d.c),pointRadius:10}]},options:{plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'最大エントロピー'}},y:{title:{display:true,text:'最終統合度(%)'}}} }});
+new Chart('c1b',{type:'bar',data:{labels:sc1b_labels,datasets:[{label:'抵抗ピーク(%)',data:sc1b_res,backgroundColor:'#e6394699'},{label:'最終統合度(%)',data:sc1b_int,backgroundColor:'#2a9d8f99'}]},options:{indexAxis:'y',plugins:{legend:{position:'bottom'}}}});
+
+// Scene 2: Active categories + Loops
+const ds2a=[],ds2b=[];
+GROUPS.forEach(g=>{
+  const ss=ALL[g.l];
+  ds2a.push({label:g.l,data:ss.map(s=>s.filter(v=>v>=.08).length),borderColor:g.c,fill:false,tension:.3,pointRadius:2,borderWidth:2});
+  ds2b.push({label:g.l,data:ss.map(s=>Math.max(0,s.filter(v=>v>=.08).length-2)),borderColor:g.c,fill:false,tension:.3,pointRadius:2,borderWidth:2});
+});
+new Chart('c2a',{type:'line',data:{labels,datasets:ds2a},options:{plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'セッション'}},y:{min:0,max:7,title:{display:true,text:'カテゴリ数'}}} }});
+const c2b=new Chart('c2b',{type:'line',data:{labels,datasets:ds2b},options:{plugins:{legend:{display:false},annotation:{}},scales:{x:{title:{display:true,text:'セッション'}},y:{min:0,max:5,title:{display:true,text:'ループ数'}}} }});
+</script>
+</body>
+</html>
