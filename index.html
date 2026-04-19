@@ -38,9 +38,9 @@ const MONTHS = [
 ];
 
 const PHASES = [
-  { id: 1, label: "第1期：弾を撃ち切る", months: [0, 1, 2], color: "#E74C3C" },
-  { id: 2, label: "第2期：査読対応バッファ", months: [3, 4, 5], color: "#3498DB" },
-  { id: 3, label: "第3期：博論統合・仕上げ", months: [6, 7, 8, 9, 10, 11], color: "#2ECC71" },
+  { id: 1, label: "第1期：論文投稿期間", months: [0, 1, 2], color: "#E74C3C" },
+  { id: 2, label: "第2期：査読対応期間", months: [3, 4, 5], color: "#3498DB" },
+  { id: 3, label: "第3期：博論執筆期間", months: [6, 7, 8, 9, 10, 11], color: "#2ECC71" },
 ];
 
 const CATEGORIES = {
@@ -62,12 +62,10 @@ const ITEMS = [
   { month: 1, cat: "submit", text: "JSET共著論文 投稿", date: "5/31", priority: "high" },
   { month: 1, cat: "review", text: "2本目 査読結果確認（6週超なら編集委員に問い合わせ）", date: "5月上旬", priority: "critical" },
   { month: 2, cat: "submit", text: "Information and Learning Sciences論文 投稿", date: "6/29", priority: "critical" },
-  { month: 2, cat: "review", text: "3本目 採録決定を待つ（条件付き採録→確定見込み）", date: "6〜7月", priority: "high" },
   { month: 3, cat: "review", text: "Studies in Higher Education論文 査読結果（想定）→修正対応", date: "7月〜", priority: "high" },
   { month: 3, cat: "study", text: "情報幾何学の勉強再開（週2〜3h上限）", date: "7月〜", priority: "low" },
   { month: 4, cat: "review", text: "査読対応に集中（新規執筆は入れない）", date: "8月", priority: "high" },
   { month: 4, cat: "dissertation", text: "博論 総合考察の骨格執筆開始", date: "8月後半", priority: "high" },
-  { month: 4, cat: "strategy", text: "Peppler・Keune等のSNS/CFPウォッチ継続", date: "通年", priority: "low" },
   { month: 5, cat: "review", text: "『認知科学』展望論文 査読結果（想定）→修正対応", date: "9月〜", priority: "high" },
   { month: 5, cat: "dissertation", text: "博論 序章・各章の接続部分の執筆", date: "9月", priority: "high" },
   { month: 5, cat: "writing", text: "Cognition and Instruction論文 構想メモ作成（Information and Learning Sciences再分析×理論フォーカス）", date: "9月", priority: "medium" },
@@ -98,8 +96,8 @@ const WARNINGS = [
     color: "#E67E22",
   },
   {
-    title: "Jounrnal of the Learning Sciences論文は博論後に回す",
-    text: "12月末の自己設定締切は外す。博論提出後の2027年2〜4月にCognition and Instruction向けとして再設計。",
+    title: "Jounrnal of the Learning Sciences論文は博論後に投稿",
+    text: "博論提出後の2027年2〜4月にCognition and Instruction向けとして再設計。",
     color: "#3498DB",
   },
 ];
