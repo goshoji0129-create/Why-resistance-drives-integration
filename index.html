@@ -161,21 +161,6 @@ function App() {
         })}
       </div>
 
-      <div style={{ marginBottom: 24 }}>
-        {WARNINGS.map((w, i) => (
-          <div key={i} style={{
-            display: "flex", gap: 12, padding: "10px 14px", marginBottom: 8,
-            borderRadius: 8, background: w.color + "0C", borderLeft: "3px solid " + w.color,
-          }}>
-            <span style={{ fontSize: 16, lineHeight: 1.4 }}>⚠</span>
-            <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: w.color, marginBottom: 2 }}>{w.title}</div>
-              <div style={{ fontSize: 12, color: "#4b5563", lineHeight: 1.5 }}>{w.text}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-
       <div>
         {groupedByMonth.map((month, mi) => {
           if (month.items.length === 0 && selectedCat) return null;
